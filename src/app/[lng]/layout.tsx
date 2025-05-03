@@ -13,8 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export async function generateMetadata({ params }: { params: { lng: string } }): Promise<Metadata> {
-  const { lng } = await params;
+export function generateMetadata(): Metadata {
   
   // Create alternates object for hreflang
   const alternates: Record<string, string> = {};
@@ -39,17 +38,18 @@ export async function generateStaticParams() {
 export default async function RootLayout({
   children,
   params
-}: Readonly<{
+}: {
   children: React.ReactNode;
   params: Promise<{ lng: string }>;
-}>) {
+}) {
   const { lng } = await params;
   return (
-    <body
-      className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      lang={lng}
-    >
-      {children}
-    </body>
+    <html lang={lng}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
+    </html>
   );
 } 

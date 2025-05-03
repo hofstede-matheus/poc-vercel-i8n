@@ -10,9 +10,15 @@ i18next
   .use(initReactI18next)
   .use(resourcesToBackend((language: string, namespace: string) => 
     import(`./locales/${language}/${namespace}.json`)))
-  .init(getOptions());
+  .init({
+    ...getOptions(),
+    // Initialize with load: 'languageOnly' to ensure fallback works correctly
+    load: 'languageOnly',
+    // Prefer client-side language detection
+    detection: { order: ['path', 'htmlTag'] }
+  });
 
-export function useTranslation(lng: string, ns: string, options = {}) {
+export function useTranslation(lng: string, ns: string = 'common', options = {}) {
   return useTranslationOrg(ns, {
     ...options,
     lng,

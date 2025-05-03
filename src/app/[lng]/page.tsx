@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useTranslation } from "@/i18n/server";
+import { getTranslation } from "@/i18n/server";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 
 export default async function Home({
@@ -8,7 +8,8 @@ export default async function Home({
   params: Promise<{ lng: string }>
 }) {
   const { lng } = await params;
-  const { t } = await useTranslation(lng);
+  
+  const { t } = await getTranslation(lng);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
